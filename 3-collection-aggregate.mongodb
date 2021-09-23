@@ -1,0 +1,53 @@
+const database = 'constructiondb';
+// const collection = 'buildings';
+
+// Create a new database.
+use(database);
+
+// Create a new collection.
+// db.createCollection(collection);
+
+// db.employees.insertMany(
+//     [
+//         {
+//             first: "Samit",
+//             last: "Koyom",
+//             mobile: "08932233792",
+//             startyear: "2020",
+//             building_id: "city_hall"
+//         },
+//         {
+//             first: "Wichai",
+//             last: "Jaidee",
+//             mobile: "0859987746",
+//             startyear: "2019",
+//             building_id: "city_hall"
+//         }
+//     ]
+// )
+
+// db.buildings.insertOne(
+//     {
+//         _id:"city_hall", 
+//         name: "City Hall",
+//         city: "Bangkok",
+//         state: "IN"
+//     }
+// )
+
+// db.employees.find()
+// db.buildings.find()
+
+// การเขียนเชื่อมข้อมูล ระหว่าง collection
+db.buildings.aggregate(
+    [
+        {
+           $lookup: {
+             from: 'employees',
+             localField: '_id',
+             foreignField: 'building_id',
+             as: 'employees'
+           } 
+        }
+    ]
+)

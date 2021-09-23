@@ -1,0 +1,164 @@
+const database = 'ministock';
+// const collection = 'products';
+
+// Create a new database.
+use(database);
+
+// Create a new collection.
+// db.createCollection(collection);
+
+// คำสั่งในการสร้าง collection ใหม่และเพิ่ม document ลงไป
+// การเพิ่ม document ใหม่เพียงรายการเดียว
+// db.users.insertOne(
+//     {
+//         name: "Samit Koyom",
+//         email: "samit@email.com",
+//         age: 40
+//     }
+// )
+
+// การเพิ่ม document หลายรายการพร้อมกัน
+// db.users.insertMany(
+//     [
+//         {
+//             name: "Wichai Jaidee",
+//             email: "wichai@email.com",
+//             age: 32
+//         },
+//         {
+//             name: "วรรณี ศรีสุข",
+//             email: "wannee@email.com",
+//             age: 28
+//         }
+//     ]
+// )
+
+// เพิ่ม document เข้า collection product หลายรายการ
+
+// คำสั่งในการเรียกดู document เพียงรายการแรกที่พบใน collection
+// db.users.findOne()
+// db.users.findOne().name
+
+// เลือกฟิดล์ที่ต้องการ
+// db.users.findOne({},{_id:0, name:1, age:1})
+// select name,age from users;
+
+// คำสั่งเรียกดู document ทั้งหมด
+// คำสั่ง find()
+// db.users.find()[0].name
+// db.users.find()
+
+// สืบค้นแบบเงื่อนไขเดียว
+db.users.find({name:'Samit Koyom'})
+// select * from users where name='Samit Koyom'
+
+// สืบค้นมากกว่าหนึ่งเงื่อนไข
+db.users.find({name:'Samit Koyom', age: 40})
+// select * from users where name='Samit Koyom' and age='40'
+
+// เลือกฟิดล์ที่ต้องการ
+db.users.find({name:'Samit Koyom', age: 40},{name:1})
+// select _id,name from users where name='Samit Koyom' and age='40'
+
+// การค้นหาโดย ไม่สนใจตัวเล็กใหญ่ (เล็กและใหญ่ให้ผลเดียวกัน)
+db.users.find({name: /samit koyom/i})
+
+// ค้นหาด้วยคำสั่ง like
+db.users.find({name: /a/i}) // Like %s%
+// select * from users where name LIKE '%a%
+
+db.users.find({name: /^sa/i}) // Like sa%
+// select * from users where name LIKE 'sa%'
+
+db.users.find({name: /ศรีสุข$/i}) // Like %ศรีสุข
+// select * from users where name LIKE '%ศรีสุข'
+
+// เพิ่มข้อมูลใหม่ที่เป็น array เข้าไปทดสอบ
+// db.users.insertMany([
+//     {name:'ประชา',phone:'0898888880',social:['facebook','line']},
+//     {name:'วารุณี',phone:'0849987788',social:['facebook','instragram']}    
+// ])
+
+// db.users.find()
+// การค้นหาใน array
+db.users.find({social:['facebook','instragram']})
+db.users.find({social:['facebook','line']})
+
+// การใช้ $eq
+db.users.find({name: {$eq:"Samit Koyom"}}) 
+// เหมือนกับใช้
+db.users.find({name:'Samit Koyom'})
+
+// การใช้ $ne
+db.users.find({name: {$ne: "Samit Koyom"}})
+
+// ตัวอย่างการสืบค้นด้วย $gt (มากกว่า)
+db.users.find({age: {$gt: 30}})
+// select * from users where age > '30'
+
+// ตัวอย่างการสืบค้นด้วย $gte
+db.users.find({age: {$gte: 28}})
+// select * from users where age >= '28'
+
+// ตัวอย่างการสืบค้นด้วย $lt
+db.users.find({age: {$lt: 30}})
+// select * from users where age < '30'
+
+// ตัวอย่างการสืบค้นด้วย $lte
+db.users.find({age: {$lte: 32}})
+// select * from users where age <= '32'
+
+// ตัวอย่างการสืบค้นด้วย $in
+db.users.find({social: {$in: ['facebook','line']}})
+// select * from users where social in('facebook','line')
+
+// ตัวอย่างการสืบค้นด้วย $nin (หาคนที่ไม่มีไลน์หน่อย)
+db.users.find({social: {$nin: ['line']}})
+// select * from users where social not in('line')
+
+// ตัวอย่างการสืบค้นด้วย $and
+db.users.find({ $and: [{social:{$eq:'facebook'}},{social:{$eq:'line'}}] })
+// select * from users where social='facebook' AND social='line'
+
+// ตัวอย่างการสืบค้นด้วย $or
+db.users.find({ $or: [{social:{$eq:'facebook'}},{social:{$eq:'line'}}] })
+// select * from users where social='facebook' OR social='line'
+
+// การเรียงลำดับข้อมูล
+db.users.find().sort({age:1})
+// select * from users ORDER BY age ASC
+
+// การเรียงลำดับข้อมูล (sort)
+db.users.find().sort({age:-1})
+// select * from users ORDER BY age DESC
+
+// การจำกัดข้อมูล (limit)
+db.users.find().limit(2)
+// select * from users LIMIT 2
+
+// เรียงลำดับข้อมูลและจำกัดข้อมูลร่วมกัน
+db.users.find().sort({age:-1}).limit(3)
+// select * from users ORDER BY age DESC LIMIT 2
+
+// การอัพเดท document
+db.users.updateOne({name:'Samit Koyom'},{$set:{email:'smk@domain.com', age:28}})
+
+// การอัพเดท document หลายค่าในครั้งเดียว
+db.users.updateMany(
+    {age:28},
+    {$set:{age:30}},
+)
+
+// db.users.insertOne({name:'arnut',phone:'0898888880',email:"arnut@email.com"})
+// db.users.insertOne({name:'wichit',phone:'0898888880',email:"c@email.com"})
+
+// การลบ document
+// db.users.deleteOne({name: 'arnut'})
+
+// การลบ document หลาย document
+// db.users.deleteMany({phone: '0898888880'})
+
+// การลบ collection ทิ้ง
+// db.users.drop()
+
+db.users.find()

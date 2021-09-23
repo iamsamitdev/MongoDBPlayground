@@ -1,0 +1,87 @@
+// ดูรายการฐานข้อมูลทั้งหมด
+// show("dbs")
+
+// เลือกฐานข้อมูล
+use("mystore")
+
+// ดูฐานข้อมูลที่ทำงานอยู่
+// db
+
+// ดูข้อมูล users
+// show("users")
+
+// ดูข้อมูล roles
+// show("roles")
+
+// เรียกดู collections ทั้งหมด
+// db.getCollectionNames()
+
+// ดู stat
+// db.stats()
+
+// db.customers.findOne()
+// db.products.findOne()
+
+// db.customers.insertOne(
+//     { 
+//         name: 'Samit Koyom', 
+//         email: 'samit@email.com',
+//         tel: '08939892033'
+//     }
+// )
+
+// เพิ่มข้อมูล document แบบ object
+
+// db.customers.insertOne(
+//     { 
+//         name: 'Wichai Jaidee', 
+//         tel: {
+//             mobile: '089398298939',
+//             office: '0298398933'
+//         } 
+//     }
+// )
+
+// เพิ่มข้อมูล document แบบ Array
+// db.customers.insertOne(
+//     { 
+//         name: 'Siriwan', 
+//         email: ['siriwan11@gmail.com','siriwan12@hotmail.com']
+//     }
+// )
+
+
+// เพิ่มข้อมูลแบบ binary
+// var data = BinData(3, 'bwHekiwee==')
+// db.binary.insertOne({bin: data})
+
+// ลบรายการที่เกินออกไป
+// db.binary.deleteOne({_id: ObjectId('614a0d73366d9db5f7cf721b')})
+
+// คำสั่งเรียกดูทั้งหมด
+// db.binary.find()
+
+// {
+//     "_id": 2,
+//     "first_name": "Wichai",
+//     "last_name": "Jaidee",
+//     "phone": "0879998877",
+//     "city": "Nontaburi",
+//     "hobby": [
+//         "cooking",
+//         "fishing",
+//     ],
+//     "jobHistory": [
+//         {
+//             "title": "Senior IT",
+//             "yearStarted": 2002
+//         },
+//         {
+//             "title": "Owner",
+//             "yearStarted": 2013
+//         }
+//     ]
+// }
+
+db.customers.find({})
+

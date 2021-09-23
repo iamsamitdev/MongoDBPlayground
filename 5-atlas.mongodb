@@ -1,0 +1,93 @@
+// use("sample_airbnb")
+
+// เรียกดู collections
+// show("collections")
+
+// แสดงห้องพักทั้งหมด
+// db.listingsAndReviews.find().limit(3)
+
+// แสดงห้องพักโดยเลือกดูบางฟิลด์ที่ต้องการ
+// db.listingsAndReviews.find(
+//     {},
+//     {
+//         name:1,
+//         listing_url:1,
+//         room_type: 1,
+//         price: 1,
+//         images: {
+//             picture_url: 1
+//         }
+//     }
+// ).limit(3)
+
+// หาห้องพักราคาไม่เกิน 20 และเป็นห้องแบบ Private room ขอดูแค่ 10 รายการเรียงตามราคาต่ำสุดไปสูงสุด
+
+// db.listingsAndReviews.find(
+//     {
+//         $and: [
+//             { price: {$lte: 20} },
+//             { room_type: {$eq: 'Private room'} }
+//         ]
+//     },
+//     {
+//         name:1,
+//         listing_url:1,
+//         room_type: 1,
+//         price: 1,
+//         images: {
+//             picture_url: 1
+//         }
+//     }
+// ).sort({price:1}).limit(10)
+
+// สร้างฐานข้อมูลใหม่บน Mongo Atlas กันครับ
+const database = "eventdb"; // ชื่อฐานข้อมูล
+// const collection = "users"; // ชื่อ collection
+
+// Create a new database
+use(database);
+
+// Create a new collection 
+// db.createCollection(collection);
+
+// เพิ่ม document ใหม่เข้าไป 1 รายการใน collection users
+// db.users.insertOne({
+//     fullname: 'สมใจ ไทยแท้',
+//     email: 'somjai@email.com',
+//     tel: '0778889999',
+//     created_at: new Timestamp()
+//     // created_at: ISODate()
+// })
+
+// db.users.insertMany(
+//     [
+//         {
+//             fullname: 'สิริรัตน์ ใจงาม',
+//             email: 'siriat@email.com',
+//             tel: '0887779997',
+//             // created_at: new Timestamp()
+//             created_at: ISODate()
+//         },
+//         {
+//             fullname: 'Wichai Jaidee',
+//             email: 'wichai@email.com',
+//             tel: '02989392343',
+//             // created_at: new Timestamp()
+//             created_at: ISODate()
+//         },
+//         {
+//             fullname: 'Anuwat Yooyen',
+//             email: 'anuwat@email.com',
+//             tel: '08308390283',
+//             // created_at: new Timestamp()
+//             created_at: ISODate()
+//         },
+//         {
+//             fullname: 'ปราณี มีสุข',
+//             email: 'pranee@email.com',
+//             tel: '083797393930',
+//             // created_at: new Timestamp()
+//             created_at: ISODate()
+//         }
+//     ]
+// )
